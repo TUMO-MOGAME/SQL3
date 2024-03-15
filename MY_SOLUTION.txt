@@ -1,0 +1,42 @@
+with table1 as (select
+				last_value(length) over(
+				range between unbounded preceding and unbounded following) as length
+				from FOOTER
+				where length != "null"
+				),
+	 table2 as (
+				select
+				last_value(width) over(
+				range between unbounded preceding and unbounded following) as height
+				from FOOTER
+				where width != "null"
+				),
+	 table3 as (
+				select
+				last_value(height) over(
+				range between unbounded preceding and unbounded following) as width
+				from FOOTER
+				where height != "null"
+     
+				),
+	 table4 as (
+				select
+				last_value(car) over(
+				range between unbounded preceding and unbounded following) as car
+				from FOOTER
+				where car != "null"
+     
+     ),
+     
+	 table5 as (
+					 select *  from table1
+					 join table2 
+					 join table3
+                     join table4
+     
+					)
+select car, length, width, height
+from table5
+limit 1;
+
+
